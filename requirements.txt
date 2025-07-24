@@ -1,0 +1,11 @@
+gradio==4.18.0
+sentence-transformers==2.6.1
+faiss-cpu==1.7.4
+pandas~=2.3.1
+matplotlib~=3.9.4
+wordcloud~=1.9.4
+gdown~=5.2.0
+numpy~=1.24
+prettytable~=3.16.0
+scikit-learn~=1.6.1
+tqdm~=4.67.1
