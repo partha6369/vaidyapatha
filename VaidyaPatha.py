@@ -2,28 +2,37 @@ import os
 import gradio as gr
 import pandas as pd
 import numpy as np
+import json
 import faiss
 import matplotlib.pyplot as plt
 import pickle
 from sentence_transformers import SentenceTransformer
 from wordcloud import WordCloud
-from utils.utils import download_file_if_missing, download_and_load_csv
+from utils.utils import download_file_if_missing, download_and_load_csv, check_and_update
 
 # === Download the Data File to the persistent storage ===
+# Load version mapping from JSON
+with open("version_file_ids.json", "r") as f:
+    VERSION_FILE_IDS = json.load(f)
+    
 # = Load Dataset =
 data_file_name = "/data/clinical_trials.csv"
 data_file_google_drive_id = "16NWmw2tZ5-5Y-ccIkxr3D81R-LYmjXyV"
-df = download_and_load_csv(data_file_name, data_file_google_drive_id)
+print(f"📁 Loading file: {data_file_name}")
+check_and_update(data_file_name, data_file_google_drive_id, VERSION_FILE_IDS)
+df = pd.read_csv(data_file_name)
 
 # = Download Embeddings =
 doc_embeddings_file_name = "/data/doc_embeddings_combined.pkl"
 doc_embeddings_google_drive_id = "1i5EZ7sG2J1afmSvXah-9NWu7po6kBGXw"
-download_file_if_missing(doc_embeddings_file_name, doc_embeddings_google_drive_id)
+print(f"📁 Loading file: {doc_embeddings_file_name}")
+check_and_update(doc_embeddings_file_name, doc_embeddings_google_drive_id, VERSION_FILE_IDS)
 
 # = Download Vector DB =
 vector_db_file_name = "/data/faiss_index.bin"
 vector_db_google_drive_id = "1VVIqNnFaG3_wKfXC8xBg0mEL7kZWeDk_"
-download_file_if_missing(vector_db_file_name, vector_db_google_drive_id)
+print(f"📁 Loading file: {vector_db_file_name}")
+check_and_update(vector_db_file_name, vector_db_google_drive_id, VERSION_FILE_IDS)
 
 # === Prepare combined_text list ===
 X_train_text = df["combined_text"].fillna("").tolist()
