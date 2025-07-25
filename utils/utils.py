@@ -39,11 +39,29 @@ def lookup_version_file_id(data_file_name, version_file_ids):
     except KeyError:
         raise ValueError(f"❌ No version file ID mapped for: {data_file_name}")
         
+def get_local_file_id(file_name):
+    fileid_path = file_name + ".fileid"
+    if os.path.exists(fileid_path):
+        with open(fileid_path, "r") as f:
+            return f.read().strip()
+    return None
+
+def write_local_file_id(file_name, file_id):
+    fileid_path = file_name + ".fileid"
+    with open(fileid_path, "w") as f:
+        f.write(file_id)
+
 def check_and_update(data_file_name, data_file_id, version_file_ids):
     version_file_id = lookup_version_file_id(data_file_name, version_file_ids)
+    current_file_id = get_local_file_id(data_file_name)
 
-    if data_file_id != version_file_id:
-        print(f"🔄 Detected new version (file_id changed). Downloading from version_file_id: {version_file_id}")
+    if current_file_id != version_file_id:
+        print(f"🔄 Detected new version (or not tracked). Downloading from version_file_id: {version_file_id}")
         gdown.download(id=version_file_id, output=data_file_name, quiet=False, fuzzy=True)
+        write_local_file_id(data_file_name, version_file_id)
+    elif not os.path.exists(data_file_name):
+        print(f"📁 File missing. Downloading using original file_id: {data_file_id}")
+        download_file_if_missing(data_file_name, data_file_id)
+        write_local_file_id(data_file_name, data_file_id)
     else:
-        print(f"✅ No change in file_id for {data_file_name}")
+        print(f"✅ File is up to date: {data_file_name}")
