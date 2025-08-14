@@ -1,10 +1,10 @@
 ---
-title: Dr. Partha’s Research Centre
+title: VaidyaPatha (वैद्यपथ)
 emoji: 📚
 colorFrom: indigo
 colorTo: blue
-sdk: gradio
-sdk_version: 5.38.1
+sdk: docker
+sdk_version: 5.42.0
 app_file: VaidyaPatha.py
 pinned: false
 license: mit

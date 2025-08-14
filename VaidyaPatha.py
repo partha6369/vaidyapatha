@@ -62,7 +62,7 @@ def generate_wordcloud_image(text, idx):
     return filename
 
 # === Gradio Inference Function ===
-def search_trials(query_text, num_to_fetch=3):
+def search_trials(query_text, num_to_fetch=5):
     if not query_text.strip():
         return [(None, "Please enter a valid query.", "")]
 
@@ -77,6 +77,12 @@ def search_trials(query_text, num_to_fetch=3):
         conditions = df.iloc[idx]["Conditions_original"]
         interventions = df.iloc[idx]["Interventions_original"]
         primary_outcome_measures = df.iloc[idx]["Primary Outcome Measures_original"]
+        study_type = df.iloc[idx]["Study Type"]
+        study_design = df.iloc[idx]["Study Design"]
+        study_status = df.iloc[idx]["Study Status"]
+        age = df.iloc[idx]["Age"]
+        gender = df.iloc[idx]["Sex"]
+        enrollments = df.iloc[idx]["Enrollment"]
         raw_text = X_train_text[idx]
         img_path = generate_wordcloud_image(raw_text, idx)
         results.append((img_path,
@@ -85,7 +91,13 @@ def search_trials(query_text, num_to_fetch=3):
                         brief_summary,
                         conditions,
                         interventions,
-                        primary_outcome_measures
+                        primary_outcome_measures,
+                        study_type,
+                        study_design,
+                        study_status,
+                        age,
+                        gender,
+                        enrollments
                        )
                       )
 
@@ -127,7 +139,16 @@ with gr.Blocks(title="VaidyaPatha: Clinical Trial Semantic Search") as app:
                 with gr.Row():
                     txt_primary_outcome1 = gr.Textbox(lines=3, max_length=5, label="Primary Outcome Measures")
             with gr.Column():
-                image1 = gr.Image(label="1")
+                with gr.Row():
+                    image1 = gr.Image(label="1")
+                with gr.Row():
+                    txt_study_type1 = gr.Textbox(lines=1, label="Study Type")
+                    txt_study_design1 = gr.Textbox(lines=1, label="Study Design")
+                    txt_study_status1 = gr.Textbox(lines=1, label="Study Status")
+                with gr.Row():
+                    txt_age1 = gr.Textbox(lines=1, label="Age")
+                    txt_gender1 = gr.Textbox(lines=1, label="Gender")
+                    txt_enrollments1 = gr.Textbox(lines=1, label="Enrollments")
 
     with gr.Accordion("Semantically Similar Clinical Trial #2"):
         html_study_title2 = gr.HTML()
@@ -141,7 +162,16 @@ with gr.Blocks(title="VaidyaPatha: Clinical Trial Semantic Search") as app:
                 with gr.Row():
                     txt_primary_outcome2 = gr.Textbox(lines=3, max_length=5, label="Primary Outcome Measures")
             with gr.Column():
-                image2 = gr.Image(label="2")
+                with gr.Row():
+                    image2 = gr.Image(label="2")
+                with gr.Row():
+                    txt_study_type2 = gr.Textbox(lines=1, label="Study Type")
+                    txt_study_design2 = gr.Textbox(lines=1, label="Study Design")
+                    txt_study_status2 = gr.Textbox(lines=1, label="Study Status")
+                with gr.Row():
+                    txt_age2 = gr.Textbox(lines=1, label="Age")
+                    txt_gender2 = gr.Textbox(lines=1, label="Gender")
+                    txt_enrollments2 = gr.Textbox(lines=1, label="Enrollments")
 
     with gr.Accordion("Semantically Similar Clinical Trial #3"):
         html_study_title3 = gr.HTML()
@@ -155,7 +185,62 @@ with gr.Blocks(title="VaidyaPatha: Clinical Trial Semantic Search") as app:
                 with gr.Row():
                     txt_primary_outcome3 = gr.Textbox(lines=3, max_length=5, label="Primary Outcome Measures")
             with gr.Column():
-                image3 = gr.Image(label="3")
+                with gr.Row():
+                    image3 = gr.Image(label="3")
+                with gr.Row():
+                    txt_study_type3 = gr.Textbox(lines=1, label="Study Type")
+                    txt_study_design3 = gr.Textbox(lines=1, label="Study Design")
+                    txt_study_status3 = gr.Textbox(lines=1, label="Study Status")
+                with gr.Row():
+                    txt_age3 = gr.Textbox(lines=1, label="Age")
+                    txt_gender3 = gr.Textbox(lines=1, label="Gender")
+                    txt_enrollments3 = gr.Textbox(lines=1, label="Enrollments")
+
+    with gr.Accordion("Semantically Similar Clinical Trial #4"):
+        html_study_title4 = gr.HTML()
+        with gr.Row():
+            with gr.Column():
+                with gr.Row():
+                    txt_brief_summary4 = gr.Textbox(lines=2, max_length=5, label="Brief Summary")
+                with gr.Row():
+                        txt_conditions4 = gr.Textbox(lines=1, label="Conditions")
+                        txt_interventions4 = gr.Textbox(lines=1, label="Interventions")
+                with gr.Row():
+                    txt_primary_outcome4 = gr.Textbox(lines=3, max_length=5, label="Primary Outcome Measures")
+            with gr.Column():
+                with gr.Row():
+                    image4 = gr.Image(label="4")
+                with gr.Row():
+                    txt_study_type4 = gr.Textbox(lines=1, label="Study Type")
+                    txt_study_design4 = gr.Textbox(lines=1, label="Study Design")
+                    txt_study_status4 = gr.Textbox(lines=1, label="Study Status")
+                with gr.Row():
+                    txt_age4 = gr.Textbox(lines=1, label="Age")
+                    txt_gender4 = gr.Textbox(lines=1, label="Gender")
+                    txt_enrollments4 = gr.Textbox(lines=1, label="Enrollments")
+
+    with gr.Accordion("Semantically Similar Clinical Trial #5"):
+        html_study_title5 = gr.HTML()
+        with gr.Row():
+            with gr.Column():
+                with gr.Row():
+                    txt_brief_summary5 = gr.Textbox(lines=2, max_length=5, label="Brief Summary")
+                with gr.Row():
+                        txt_conditions5 = gr.Textbox(lines=1, label="Conditions")
+                        txt_interventions5 = gr.Textbox(lines=1, label="Interventions")
+                with gr.Row():
+                    txt_primary_outcome5 = gr.Textbox(lines=3, max_length=5, label="Primary Outcome Measures")
+            with gr.Column():
+                with gr.Row():
+                    image5 = gr.Image(label="5")
+                with gr.Row():
+                    txt_study_type5 = gr.Textbox(lines=1, label="Study Type")
+                    txt_study_design5 = gr.Textbox(lines=1, label="Study Design")
+                    txt_study_status5 = gr.Textbox(lines=1, label="Study Status")
+                with gr.Row():
+                    txt_age5 = gr.Textbox(lines=1, label="Age")
+                    txt_gender5 = gr.Textbox(lines=1, label="Gender")
+                    txt_enrollments5 = gr.Textbox(lines=1, label="Enrollments")
 
     def run_search(q):
         results = search_trials(q)
@@ -165,6 +250,12 @@ with gr.Blocks(title="VaidyaPatha: Clinical Trial Semantic Search") as app:
         interventions_outputs = []
         primary_outcomes_outputs = []
         trial_title = []
+        study_type_outputs = []
+        study_design_outputs = []
+        study_status_outputs = []
+        age_outputs = []
+        gender_outputs = []
+        enrollments_outputs = []
 
         for i, (img_url, 
                 label, 
@@ -172,13 +263,25 @@ with gr.Blocks(title="VaidyaPatha: Clinical Trial Semantic Search") as app:
                 brief_summary,
                 conditions,
                 interventions,
-                primary_outcomes
+                primary_outcomes,
+                study_type,
+                study_design,
+                study_status,
+                age,
+                gender,
+                enrollments
                ) in enumerate(results):
             image_outputs.append(img_url)
             brief_summary_outputs.append(brief_summary)
             conditions_outputs.append(conditions)
             interventions_outputs.append(interventions)
             primary_outcomes_outputs.append(primary_outcomes)
+            study_type_outputs.append(study_type)
+            study_design_outputs.append(study_design)
+            study_status_outputs.append(study_status)
+            age_outputs.append(age)
+            gender_outputs.append(gender)
+            enrollments_outputs.append(enrollments)
 
             trial_title.append(f"""
                                     <div style='text-align: center; margin-bottom: 10px;'>
@@ -190,19 +293,23 @@ with gr.Blocks(title="VaidyaPatha: Clinical Trial Semantic Search") as app:
                                 """
                               )
 
-        return image_outputs[0], trial_title[0], brief_summary_outputs[0], conditions_outputs[0], interventions_outputs[0], primary_outcomes_outputs[0], \
-               image_outputs[1], trial_title[1], brief_summary_outputs[1], conditions_outputs[1], interventions_outputs[1], primary_outcomes_outputs[1], \
-               image_outputs[2], trial_title[2], brief_summary_outputs[2], conditions_outputs[2], interventions_outputs[2], primary_outcomes_outputs[2]
+        return image_outputs[0], trial_title[0], brief_summary_outputs[0], conditions_outputs[0], interventions_outputs[0], primary_outcomes_outputs[0], study_type_outputs[0], study_design_outputs[0], study_status_outputs[0], age_outputs[0], gender_outputs[0], enrollments_outputs[0], \
+               image_outputs[1], trial_title[1], brief_summary_outputs[1], conditions_outputs[1], interventions_outputs[1], primary_outcomes_outputs[1], study_type_outputs[1], study_design_outputs[1], study_status_outputs[1], age_outputs[1], gender_outputs[1], enrollments_outputs[1], \
+               image_outputs[2], trial_title[2], brief_summary_outputs[2], conditions_outputs[2], interventions_outputs[2], primary_outcomes_outputs[2], study_type_outputs[2], study_design_outputs[2], study_status_outputs[2], age_outputs[2], gender_outputs[2], enrollments_outputs[2], \
+               image_outputs[3], trial_title[3], brief_summary_outputs[3], conditions_outputs[3], interventions_outputs[3], primary_outcomes_outputs[3], study_type_outputs[3], study_design_outputs[3], study_status_outputs[3], age_outputs[3], gender_outputs[3], enrollments_outputs[3], \
+               image_outputs[4], trial_title[4], brief_summary_outputs[4], conditions_outputs[4], interventions_outputs[4], primary_outcomes_outputs[4], study_type_outputs[4], study_design_outputs[4], study_status_outputs[4], age_outputs[4], gender_outputs[4], enrollments_outputs[4]
 
     submit_btn.click(
         fn=run_search, 
         inputs=query_input, 
-        outputs=[image1, html_study_title1, txt_brief_summary1, txt_conditions1, txt_interventions1, txt_primary_outcome1,
-                 image2, html_study_title2, txt_brief_summary2, txt_conditions2, txt_interventions2, txt_primary_outcome2,
-                 image3, html_study_title3, txt_brief_summary3, txt_conditions3, txt_interventions3, txt_primary_outcome3
+        outputs=[image1, html_study_title1, txt_brief_summary1, txt_conditions1, txt_interventions1, txt_primary_outcome1, txt_study_type1, txt_study_design1, txt_study_status1, txt_age1, txt_gender1, txt_enrollments1,
+                 image2, html_study_title2, txt_brief_summary2, txt_conditions2, txt_interventions2, txt_primary_outcome2, txt_study_type2, txt_study_design2, txt_study_status2, txt_age2, txt_gender2, txt_enrollments2,
+                 image3, html_study_title3, txt_brief_summary3, txt_conditions3, txt_interventions3, txt_primary_outcome3, txt_study_type3, txt_study_design3, txt_study_status3, txt_age3, txt_gender3, txt_enrollments3,
+                 image4, html_study_title4, txt_brief_summary4, txt_conditions4, txt_interventions4, txt_primary_outcome4, txt_study_type4, txt_study_design4, txt_study_status4, txt_age4, txt_gender4, txt_enrollments4,
+                 image5, html_study_title5, txt_brief_summary5, txt_conditions5, txt_interventions5, txt_primary_outcome5, txt_study_type5, txt_study_design5, txt_study_status5, txt_age5, txt_gender5, txt_enrollments5
                 ]
     )
-    
+
     gr.HTML(f"""
         <a href="{paypal_url}" target="_blank">
             <button style="background-color:#0070ba;color:white;border:none;padding:10px 20px;
@@ -214,8 +321,12 @@ with gr.Blocks(title="VaidyaPatha: Clinical Trial Semantic Search") as app:
 
 # === Launch the App ===
 if __name__ == "__main__":
-    # Determine if running on Hugging Face Spaces
-    on_spaces = os.environ.get("SPACE_ID") is not None
-    
-    # Launch the app conditionally
-    app.launch(share=not on_spaces)
+    on_spaces = os.getenv("SPACE_ID") is not None
+    port = int(os.getenv("PORT", 7860))  # HF sets PORT
+
+    app.queue().launch(
+        server_name="0.0.0.0",   # listen on all interfaces
+        server_port=port,        # use HF-provided port
+        show_api=False,
+        share=not on_spaces      # False on Spaces, True locally
+    )
